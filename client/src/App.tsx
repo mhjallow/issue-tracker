@@ -10,7 +10,7 @@ function App() { //The top level piece of the application, the visible part of t
   useEffect(() => { //Runs the code inside once, when the page first loads
     fetch("http://localhost:5000/") //sending a fetch request to the server
       .then((response) => response.text()) //taking the response and converting it to plain text
-      .then((data) => setMessage(data))//Whatever comes back gets saved into the memory box using setMessage
+      .then((data) => setMessage(data))//Whatever comes back gets saved into message using setMessage
       .catch((error) => console.error("Error fetching data:", error)); //error handling so the app doesn't crash
   }, []); //The '[]' means don't run this again unless something changes
 
