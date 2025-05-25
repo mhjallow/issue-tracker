@@ -12,6 +12,18 @@ app.get("/", (req, res) => {
   res.send("Your server is working!");
 });
 
+//Creating a list of issues that consist of an id number, title, and status.
+const issues = [
+  {id: 1, title: "Fix login bug", status: "open"},
+  {id: 2, title: "Improve page speed", status: "in progress"},
+  {id: 3, title: "Update user dashboard", status: "done"},
+];
+
+//Adding new route to give list of issues in JSON format
+app.get("/api/issues", (req, res) => {
+  res.json(issues);
+});
+
 
 const PORT = 5000; //Storing the port number
 
