@@ -4,21 +4,38 @@ import { useEffect, useState } from "react";
 
 function App() { //The top level piece of the application, the visible part of the app.
 
-  //Creates a memory box named message. setMessage is the tool used to change the content of the message later. We start with an empty string.
-  const [message, setMessage] = useState("");
 
-  useEffect(() => { //Runs the code inside once, when the page first loads
-    fetch("http://localhost:5000/") //sending a fetch request to the server
-      .then((response) => response.text()) //taking the response and converting it to plain text
-      .then((data) => setMessage(data))//Whatever comes back gets saved into message using setMessage
-      .catch((error) => console.error("Error fetching data:", error)); //error handling so the app doesn't crash
+  type Issue = { //Creating a type for the issues
+  id: number;
+  title: string;
+  status: string;
+  };
+
+  
+  //Creating memory box for issues
+  const [issues, setIssues] = useState<Issue[]>([]);
+
+  //sending a fetch request for the issues
+  useEffect(() => {
+    fetch("http://localhost:5000/api/issues")
+      .then((res) => res.json())
+      .then((data) => setIssues(data))
+      .catch((err) => console.error("Fetch error:", err));
   }, []); //The '[]' means don't run this again unless something changes
 
-  return ( //returning the HTML structure to display things on the page
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-      <h1 className="text-2xl font-semibold text-green-700">{message}</h1>
-    </div>
-  );
+  return ( //Displaying the list of issues
+      <div className="min-h-screen bg-gray-100 p-8">
+        <h1 className="text-3xl font-bold text-center mb-6">Issue List</h1>
+        <ul className="space-y-4 max-w-xl mx-auto">
+          {issues.map((issue) => ( //For each item in issues, create a list item with the title and status
+            <li key={issue.id} className="p-4 bg-white rounded shadow">
+              <p className="text-lg font-medium">{issue.title}</p>
+              <p className="text-sm text-gray-500">Status: {issue.status}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
 }
 
 export default App;
