@@ -6,6 +6,9 @@ const app = express(); //Creating an express application
 // Enable CORS
 app.use(cors());
 
+//Enable server to read JSON from the frontend
+app.use(express.json());
+
 
 //When someone visits the address "/" send back a message
 app.get("/", (req, res) => {
@@ -13,7 +16,7 @@ app.get("/", (req, res) => {
 });
 
 //Creating a list of issues that consist of an id number, title, and status.
-const issues = [
+let issues = [
   {id: 1, title: "Fix login bug", status: "open"},
   {id: 2, title: "Improve page speed", status: "in progress"},
   {id: 3, title: "Update user dashboard", status: "done"},
@@ -22,6 +25,29 @@ const issues = [
 //Adding new route to give list of issues in JSON format
 app.get("/api/issues", (req, res) => {
   res.json(issues);
+});
+
+
+//Creating new POST route to receive new issue data
+app.post("/api/issues", (req, res) =>{
+
+  //Pull the title from the form and return an error if the title is missing
+  const {title} = req.body;
+  if(!title){
+    return res.status(400).json({error: "Title is required"});
+  }
+
+  //Create a new issue from the given data
+  const newIssue = {
+    id: issues.length + 1,
+    title,
+    status: "open"
+  };
+
+  //Add the new issue to the list
+  issues.push(newIssue);
+  res.status(201).json(newIssue)
+
 });
 
 
