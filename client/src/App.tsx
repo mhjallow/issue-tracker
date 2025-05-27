@@ -12,8 +12,11 @@ function App() { //The top level piece of the application, the visible part of t
   };
 
   
-  //Creating memory box for issues
+  //Creating memory box for issues, which will be a list of the issue type
   const [issues, setIssues] = useState<Issue[]>([]);
+  //Memory box for new title
+  const [newTitle, setNewTitle] = useState("");
+
 
   //sending a fetch request for the issues
   useEffect(() => {
@@ -23,9 +26,41 @@ function App() { //The top level piece of the application, the visible part of t
       .catch((err) => console.error("Fetch error:", err));
   }, []); //The '[]' means don't run this again unless something changes
 
+  //Handling adding new issues
+  const handleSubmite = (e: React.FormEvent) => {
+    e.preventDefault(); //Keep page from reloading
+
+    fetch("http://localhost:5000/api/issues", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({title: newTitle})
+    })
+    .then((res) => res.json())
+    .then((newIssue) => {
+      setIssues([...issues, newIssue]);
+      setNewTitle("");
+    })
+    .catch((err) => console.error("Post error:", err));
+  };
+
   return ( //Displaying the list of issues
       <div className="min-h-screen bg-gray-100 p-8">
         <h1 className="text-3xl font-bold text-center mb-6">Issue List</h1>
+
+        <form onSubmit={handleSubmite} className="max-w-xl mx-auto mb-6 flex gap-4">
+          <input
+            value={newTitle}
+            onChange={(e) => setNewTitle(e.target.value)}
+            className="flex-1 p-2 border rounded"
+            placeholder="New issue title"
+          />
+          <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded">
+            Add Issue
+          </button>
+        </form>
+
         <ul className="space-y-4 max-w-xl mx-auto">
           {issues.map((issue) => ( //For each item in issues, create a list item with the title and status
             <li key={issue.id} className="p-4 bg-white rounded shadow">
