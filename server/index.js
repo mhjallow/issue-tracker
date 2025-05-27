@@ -33,8 +33,8 @@ app.post("/api/issues", (req, res) =>{
 
   //Pull the title from the form and return an error if the title is missing
   const {title} = req.body;
-  
-  if(!title){
+
+  if(!title || !title.trim()){
     return res.status(400).json({error: "Title is required"});
   }
 
