@@ -47,7 +47,7 @@ app.post("/api/issues", (req, res) =>{
 
   //Add the new issue to the list
   issues.push(newIssue);
-  res.status(201).json(newIssue)
+  res.status(201).json(newIssue) //Send the new issue
 
 });
 

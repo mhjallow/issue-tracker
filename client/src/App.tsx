@@ -51,7 +51,7 @@ function App() { //The top level piece of the application, the visible part of t
       if(!res.ok){
         throw new Error("Server error");
       }
-      return res.json();
+      return res.json(); //Otherwise return the response in JSON format
     })
     .then((newIssue) => {
       setIssues([...issues, newIssue]);
