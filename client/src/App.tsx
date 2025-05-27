@@ -27,7 +27,7 @@ function App() { //The top level piece of the application, the visible part of t
   }, []); //The '[]' means don't run this again unless something changes
 
   //Handling adding new issues
-  const handleSubmite = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault(); //Keep page from reloading
 
     fetch("http://localhost:5000/api/issues", {
@@ -49,7 +49,7 @@ function App() { //The top level piece of the application, the visible part of t
       <div className="min-h-screen bg-gray-100 p-8">
         <h1 className="text-3xl font-bold text-center mb-6">Issue List</h1>
 
-        <form onSubmit={handleSubmite} className="max-w-xl mx-auto mb-6 flex gap-4">
+        <form onSubmit={handleSubmit} className="max-w-xl mx-auto mb-6 flex gap-4">
           <input
             value={newTitle}
             onChange={(e) => setNewTitle(e.target.value)}
