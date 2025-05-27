@@ -29,6 +29,14 @@ function App() { //The top level piece of the application, the visible part of t
   //Handling adding new issues
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault(); //Keep page from reloading
+
+    //Prevent empty or all space input
+    if(!newTitle.trim()){ //If all whitespaces are removed and the result is an empty string
+      alert("Please enter a title before submitting")
+      setNewTitle("");
+      return;
+    }
+
     //Send a post request to the backend with a new issue with the given title
     fetch("http://localhost:5000/api/issues", {
       method: "POST",
@@ -38,12 +46,21 @@ function App() { //The top level piece of the application, the visible part of t
       body: JSON.stringify({title: newTitle})
     })
     //After the data is sent to the backend, return it to the frontend as an issue with id and status and add it to the list
-    .then((res) => res.json())
+    .then((res) => {
+      //If the backend returns an error
+      if(!res.ok){
+        throw new Error("Server error");
+      }
+      return res.json();
+    })
     .then((newIssue) => {
       setIssues([...issues, newIssue]);
       setNewTitle(""); //Clears the input box
     })
-    .catch((err) => console.error("Post error:", err));
+    .catch((err) => {
+      console.error("Post error:", err);
+      alert("Something went wrong while creating the issue.");
+    });
   };
 
   return ( //Displaying the list of issues
