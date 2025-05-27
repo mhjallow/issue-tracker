@@ -29,7 +29,7 @@ function App() { //The top level piece of the application, the visible part of t
   //Handling adding new issues
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault(); //Keep page from reloading
-
+    //Send a post request to the backend with a new issue with the given title
     fetch("http://localhost:5000/api/issues", {
       method: "POST",
       headers: {
@@ -37,10 +37,11 @@ function App() { //The top level piece of the application, the visible part of t
       },
       body: JSON.stringify({title: newTitle})
     })
+    //After the data is sent to the backend, return it to the frontend as an issue with id and status and add it to the list
     .then((res) => res.json())
     .then((newIssue) => {
       setIssues([...issues, newIssue]);
-      setNewTitle("");
+      setNewTitle(""); //Clears the input box
     })
     .catch((err) => console.error("Post error:", err));
   };
@@ -52,7 +53,7 @@ function App() { //The top level piece of the application, the visible part of t
         <form onSubmit={handleSubmit} className="max-w-xl mx-auto mb-6 flex gap-4">
           <input
             value={newTitle}
-            onChange={(e) => setNewTitle(e.target.value)}
+            onChange={(e) => setNewTitle(e.target.value)} //Updating event object
             className="flex-1 p-2 border rounded"
             placeholder="New issue title"
           />

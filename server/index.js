@@ -33,11 +33,12 @@ app.post("/api/issues", (req, res) =>{
 
   //Pull the title from the form and return an error if the title is missing
   const {title} = req.body;
+  
   if(!title){
     return res.status(400).json({error: "Title is required"});
   }
 
-  //Create a new issue from the given data
+  //Create a new issue from the given data and add id and status
   const newIssue = {
     id: issues.length + 1,
     title,
