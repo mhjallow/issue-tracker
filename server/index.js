@@ -53,7 +53,7 @@ app.post("/api/issues", (req, res) =>{
 });
 
 //Creating new DELETE route to remove issues from the backend
-app.delete("api/issues/:id", (req, res) => {
+app.delete("/api/issues/:id", (req, res) => {
   const id = parseInt(req.params.id); //Pull id from URL
   const index = issues.findIndex((issue) => issue.id === id); //Find the index of the issue with the given ID
 

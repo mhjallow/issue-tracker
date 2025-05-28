@@ -63,6 +63,20 @@ function App() { //The top level piece of the application, the visible part of t
     });
   };
 
+  //Handling the deletion of issues
+  const handleDelete = (id: number) => {
+    fetch(`http://localhost:5000/api/issues/${id}`, {method: "DELETE"})
+    .then((res) => {
+      if (res.status === 204) {
+        setIssues(issues.filter((issue) => issue.id !== id)); //Set the list of issues to all the items in the list that do not have the given id
+      }
+      else{
+        throw new Error("Deletion failed");
+      }
+    })
+    .catch((err) => console.error("Deletion error:", err));
+  };
+
   return ( //Displaying the list of issues
       <div className="min-h-screen bg-gray-100 p-8">
         <h1 className="text-3xl font-bold text-center mb-6">Issue List</h1>
@@ -81,9 +95,14 @@ function App() { //The top level piece of the application, the visible part of t
 
         <ul className="space-y-4 max-w-xl mx-auto">
           {issues.map((issue) => ( //For each item in issues, create a list item with the title and status
-            <li key={issue.id} className="p-4 bg-white rounded shadow">
-              <p className="text-lg font-medium">{issue.title}</p>
-              <p className="text-sm text-gray-500">Status: {issue.status}</p>
+            <li key={issue.id} className="p-4 bg-white rounded shadow flex justify-between items-center">
+              <div>
+                <p className="text-lg font-medium">{issue.title}</p>
+                <p className="text-sm text-gray-500">Status: {issue.status}</p>
+              </div>
+              <button onClick={() => handleDelete(issue.id)} className="text-red-600 hover:underline">
+                Delete
+              </button>
             </li>
           ))}
         </ul>
