@@ -1,3 +1,4 @@
+import { TrashIcon } from "@heroicons/react/16/solid";
 import { useEffect, useState } from "react";
 // - useEffect: Runs code when the component shows up (like "on page load")
 // - useState: Creates a "memory" which stores information temporarily
@@ -100,8 +101,8 @@ function App() { //The top level piece of the application, the visible part of t
                 <p className="text-lg font-medium">{issue.title}</p>
                 <p className="text-sm text-gray-500">Status: {issue.status}</p>
               </div>
-              <button onClick={() => handleDelete(issue.id)} className="text-red-600 hover:underline">
-                Delete
+              <button onClick={() => handleDelete(issue.id)} className="text-red-600 rounded-full shadow-2xl hover:shadow-lg">
+                <TrashIcon className="size-6"/>
               </button>
             </li>
           ))}
