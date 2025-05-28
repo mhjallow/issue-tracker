@@ -34,6 +34,7 @@ app.post("/api/issues", (req, res) =>{
   //Pull the title from the form and return an error if the title is missing
   const {title} = req.body;
 
+  //Input validation, if title is empty or only spaces, return error
   if(!title || !title.trim()){
     return res.status(400).json({error: "Title is required"});
   }
@@ -47,8 +48,22 @@ app.post("/api/issues", (req, res) =>{
 
   //Add the new issue to the list
   issues.push(newIssue);
-  res.status(201).json(newIssue) //Send the new issue
+  res.status(201).json(newIssue) //Send the new issue to the frontend
 
+});
+
+//Creating new DELETE route to remove issues from the backend
+app.delete("api/issues/:id", (req, res) => {
+  const id = parseInt(req.params.id); //Pull id from URL
+  const index = issues.findIndex((issue) => issue.id === id); //Find the index of the issue with the given ID
+
+  //If index is not in list, return an error
+  if(index === -1){
+    return res.status(404).json({error: "Issue not found"});
+  }
+
+  issues.splice(index, 1); //Remove one item from the list, starting at index, effectively removing the item at the given index
+  res.status(204).send();
 });
 
 
