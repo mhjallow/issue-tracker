@@ -21,6 +21,7 @@ let issues = [
   {id: 2, title: "Improve page speed", status: "in progress"},
   {id: 3, title: "Update user dashboard", status: "done"},
 ];
+let nextId = issues.length + 1 //
 
 //Adding new route to give list of issues in JSON format
 app.get("/api/issues", (req, res) => {
@@ -41,7 +42,7 @@ app.post("/api/issues", (req, res) =>{
 
   //Create a new issue from the given data and add id and status
   const newIssue = {
-    id: issues.length + 1,
+    id: nextId++,
     title,
     status: "open"
   };
