@@ -67,6 +67,26 @@ app.delete("/api/issues/:id", (req, res) => {
   res.status(204).send();
 });
 
+//Creating new PUT route to update existing issues on the backend
+app.put("/api/issues/:id", (req,res) =>{
+  const id = parseInt(req.params.id, 10);
+  const {title} = req.body;
+
+  //Find issue and make sure it exists
+  const issue = issues.find((i) => i.id === id);
+  if(!issue){
+    return res.status(404).json({error: "Issue not found"});
+  }
+
+  //Make sure title is valid
+  if(!title || !title.trim()){
+    return res.status(404).json({error: "Title is required"});
+  }
+
+  issue.title.trim();
+  res.status.json(issue);
+})
+
 
 const PORT = 5000; //Storing the port number
 
