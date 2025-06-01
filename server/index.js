@@ -68,7 +68,7 @@ app.delete("/api/issues/:id", (req, res) => {
 });
 
 //Creating new PUT route to update existing issues on the backend
-app.put("/api/issues/:id", (req,res) =>{
+app.put("/api/issues/:id", (req, res) =>{
   const id = parseInt(req.params.id, 10);
   const {title} = req.body;
 
@@ -80,10 +80,10 @@ app.put("/api/issues/:id", (req,res) =>{
 
   //Make sure title is valid
   if(!title || !title.trim()){
-    return res.status(404).json({error: "Title is required"});
+    return res.status(400).json({error: "Title is required"});
   }
 
-  issue.title.trim();
+  issue.title = title.trim();
   res.status.json(issue);
 })
 
