@@ -9,3 +9,5 @@ Day 4: Implemented new route and transfer of data between front and backend and 
 Day 5: Implemented a form to add new issues to the server through the frontend and display them live
 
 Day 6: Added delete button for issues on the frontend that deletes the issues from the backend and displays the updated list on the frontend
+
+Day 7: Used PUT request to implement issue updates/editing. Added an edit button and editing mode on frontend.
