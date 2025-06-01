@@ -83,7 +83,7 @@ app.put("/api/issues/:id", (req, res) =>{
     return res.status(400).json({error: "Title is required"});
   }
 
-  issue.title = title.trim();
+  issue.title = title.trim(); //Update title of issue
   res.status(200).json(issue);
 })
 

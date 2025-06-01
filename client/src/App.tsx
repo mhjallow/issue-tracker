@@ -18,8 +18,8 @@ function App() {
   //Memory box for new title
   const [newTitle, setNewTitle] = useState("");
   //States to track which issue is being edited
-  const [editingId, setEditingId] = useState<number | null>(null);
-  const [editedTitle, setEditedTitle] = useState("");
+  const [editingId, setEditingId] = useState<number | null>(null); //Tracks which issue is being edited
+  const [editedTitle, setEditedTitle] = useState(""); //Stores the value being edited
 
   //sending a fetch request for the issues
   useEffect(() => {
@@ -81,6 +81,7 @@ function App() {
   };
 
   const handleUpdate = (id: number) => {
+    //Validating Title
     if (!editedTitle.trim()) {
       alert("Title cannot be empty");
       return;
@@ -95,13 +96,14 @@ function App() {
     })
       .then((res) => {
         if (!res.ok) throw new Error("Update Failed");
-        return res.json();
+        return res.json(); //Extract response as json
       })
       .then((updatedIssue) => {
+        //Replacing the updated issue in the list, if the id matches, replace the issue with updatedIssue, if not, keep issue as is
         setIssues(
           issues.map((issue) => (issue.id === id ? updatedIssue : issue))
         );
-        setEditingId(null);
+        setEditingId(null); //Exits edit mode by setting editingId to null
       })
       .catch((err) => console.error("Update error:", err));
   };
@@ -138,7 +140,7 @@ function App() {
               key={issue.id}
               className="p-4 bg-white rounded shadow space-y-2"
             >
-              {editingId === issue.id ? (
+              {editingId === issue.id ? ( //If an issue is being edited, show an input box with the save and cancel buttons, otherwise, show the issue regularly
                 <>
                   <input
                     value={editedTitle}
