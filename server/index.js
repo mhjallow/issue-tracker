@@ -84,7 +84,7 @@ app.put("/api/issues/:id", (req, res) =>{
   }
 
   issue.title = title.trim();
-  res.status.json(issue);
+  res.status(200).json(issue);
 })
 
 
